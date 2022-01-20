@@ -42,16 +42,16 @@ let encrypt_output = document.querySelector('#encrypt_output');
 let decrypt_output = document.querySelector('#decrypt_output');
 let compare = document.querySelector('#compare');
 encrypt.addEventListener('click', () => {
-    encrypt_output.value = vigenere_encrypt(input.value, key.value);
+    encrypt_output.value = vigenere_encrypt(input.value, key.value.toUpperCase());
     decrypt.disabled = false;
 });
 decrypt.addEventListener('click', () => {
-    decrypt_output.value = vigenere_decrypt(encrypt_output.value, key.value);
+    decrypt_output.value = vigenere_decrypt(encrypt_output.value, key.value.toUpperCase());
     compare.disabled = false;
 });
 compare.addEventListener('click', () => {
     compare.classList.remove('btn-outline-secondary');
-    if (vigenere_decrypt(encrypt_output.value, key.value) == input.value) {
+    if (vigenere_encrypt(decrypt_output.value, key.value.toUpperCase()) == encrypt_output.value) {
         compare.classList.remove('btn-danger');
         compare.classList.add('btn-success');
     } else {
