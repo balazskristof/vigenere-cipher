@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigenère Cipher</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-3">
+        <h1>Vigenère Cipher</h1>
+        <form>
+            <div class="form-group">
+                <p>Encryption</p>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="encrypt_input">
+                    <span class="input-group-text">Key</span>
+                    <input type="text" class="form-control" id="encrypt_key">
+                    <button class="btn btn-outline-secondary" type="button" id="encrypt">Encrypt</button>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Output</span>
+                    <input type="text" class="form-control" id="encrypt_output" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <p>Decryption</p>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="decrypt_input">
+                    <span class="input-group-text">Key</span>
+                    <input type="text" class="form-control" id="decrypt_key">
+                    <button class="btn btn-outline-secondary" type="button" id="decrypt">Decrypt</button>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Output</span>
+                    <input type="text" class="form-control" id="decrypt_output" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+<script src="vigenere.js"></script>
+<script>
+['en', 'de'].forEach(v => {
+    document.querySelector(`#${v}crypt`).addEventListener('click', () => {
+        let input = document.querySelector(`#${v}crypt_input`).value;
+        let key = document.querySelector(`#${v}crypt_key`).value;
+        document.querySelector(`#${v}crypt_output`).value = (v == 'en' ? vigenere_encrypt(input, key) : vigenere_decrypt(input, key));
+    });
+});
+</script>
+</body>
+</html>
