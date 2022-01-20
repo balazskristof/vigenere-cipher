@@ -12,41 +12,52 @@
         <h1>Vigenère Cipher</h1>
         <form>
             <div class="form-group">
-                <p>Encryption</p>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="encrypt_input">
+                    <span class="input-group-text">Input</span>
+                    <input type="text" class="form-control" id="input">
                     <span class="input-group-text">Key</span>
-                    <input type="text" class="form-control" id="encrypt_key">
+                    <input type="text" class="form-control" id="key">
                     <button class="btn btn-outline-secondary" type="button" id="encrypt">Encrypt</button>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Output</span>
-                    <input type="text" class="form-control" id="encrypt_output" disabled>
                 </div>
             </div>
             <div class="form-group">
-                <p>Decryption</p>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="decrypt_input">
-                    <span class="input-group-text">Key</span>
-                    <input type="text" class="form-control" id="decrypt_key">
-                    <button class="btn btn-outline-secondary" type="button" id="decrypt">Decrypt</button>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Output</span>
+                    <span class="input-group-text">Encryption output</span>
+                    <input type="text" class="form-control" id="encrypt_output" disabled>
+                    <span class="input-group-text">Decryption output</span>
                     <input type="text" class="form-control" id="decrypt_output" disabled>
+                    <button class="btn btn-outline-secondary" type="button" id="decrypt" disabled>Decrypt</button>
+                    <button class="btn btn-outline-secondary" type="button" id="compare" disabled>Compare</button>
                 </div>
             </div>
         </form>
     </div>
 <script src="vigenere.js"></script>
 <script>
-['en', 'de'].forEach(v => {
-    document.querySelector(`#${v}crypt`).addEventListener('click', () => {
-        let input = document.querySelector(`#${v}crypt_input`).value;
-        let key = document.querySelector(`#${v}crypt_key`).value;
-        document.querySelector(`#${v}crypt_output`).value = (v == 'en' ? vigenere_encrypt(input, key) : vigenere_decrypt(input, key));
-    });
+let input = document.querySelector('#input');
+let key = document.querySelector('#key');
+let encrypt = document.querySelector('#encrypt');
+let decrypt = document.querySelector('#decrypt');
+let encrypt_output = document.querySelector('#encrypt_output');
+let decrypt_output = document.querySelector('#decrypt_output');
+let compare = document.querySelector('#compare');
+encrypt.addEventListener('click', () => {
+    encrypt_output.value = vigenere_encrypt(input.value, key.value);
+    decrypt.disabled = false;
+});
+decrypt.addEventListener('click', () => {
+    decrypt_output.value = vigenere_decrypt(encrypt_output.value, key.value);
+    compare.disabled = false;
+});
+compare.addEventListener('click', () => {
+    compare.classList.remove('btn-outline-secondary');
+    if (vigenere_decrypt(encrypt_output.value, key.value) == input.value) {
+        compare.classList.remove('btn-danger');
+        compare.classList.add('btn-success');
+    } else {
+        compare.classList.remove('btn-success');
+        compare.classList.add('btn-danger');
+    }
 });
 </script>
 </body>
